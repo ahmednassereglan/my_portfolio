@@ -71,35 +71,26 @@ function printDataHome(data){
     document.querySelector("#footer__conatactData_address").innerHTML = data.address;
 }
 function printDataSkill(data){
-    document.querySelector("#skills__skill_map").innerHTML += 
+    document.querySelector("#skills__skill_map").innerHTML = 
     data.map(skill =>
-        `
-        <div class="skills__data">
+        `<div class="skills__data">
             <div class="skills__names">
-                ${skill.attributes.icon? `<i class="bx ${skill.attributes.icon} skills__icon"></i>` : "" }
-                ${skill.attributes.image.data? `<img style="width:31px;height:31px;margin-right:15px;" src="https://strapi--profile.herokuapp.com${skill.attributes.image.data.attributes.url}"  alt="">` : "" }
+                ${skill.attributes.icon? `<i class="bx ${skill.attributes.icon} skills__icon"></i>` : `` }
+                ${skill.attributes.image.data? `<img style="width:31px;height:31px;margin-right:15px;" src="https://strapi--profile.herokuapp.com${skill.attributes.image.data.attributes.url}"  alt="">` : `` }
                 <span class="skills__name">${skill.attributes.name}</span>
             </div>
-            <div class="skills__bar" style="width: ${skill.attributes.num}%;">
+            <div class="skills__bar" style="width: ${skill.attributes.num}%">
 
             </div>
             <div>
                 <span class="skills__percentage">${skill.attributes.num}%</span>
             </div>
-        </div>`
-    )
+        </div>
+        `).join('');
 }
 
 function printDataWork(data){
-    // console.log(data[0].attributes.image.data[0].attributes.url);
-    // data.map(work =>
-        
-    //     work.attributes.image.data.map(wrk =>
-    //         console.log(wrk.attributes.url)
-    //     )
-    // );
-    document.querySelector("#work__container_id").innerHTML += 
-        data.map(work => 
+    const test = data.map(work =>
         `
         <div id="carouselControls${work.id}" class="carousel slide work__img" data-bs-ride="carousel" >
             <div class="carousel-inner" data-bs-toggle="modal" data-bs-target="#Modal${work.id}">
@@ -112,7 +103,7 @@ function printDataWork(data){
                         <img style="height:330px;width:350px" src="https://strapi--profile.herokuapp.com${wrk.attributes.url}" alt="">
                     </div>
                 `
-            )};
+            ).join('')}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls${work.id}" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -132,18 +123,18 @@ function printDataWork(data){
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <img src="assets/img/work6.jpg" alt="">
+                            <img style="height:330px;width:465px" src="https://strapi--profile.herokuapp.com${work.attributes.image.data[0].attributes.url}" alt="">
                         </div>
                         <div class="modal-footer">
                         <a href="${work.attributes.link_github}"><button type="button" class="btn btn-dark"><i class='bx bxl-github'></i> GitHub</button></a>
-                        <a href="${work.attributes.link_live}"><button type="button" class="btn btn-primary"><i class='bx bx-show-alt'></i> live preview</button></a>
+                        ${work.attributes.live?`<a href="${work.attributes.link_live}"><button type="button" class="btn btn-primary"><i class='bx bx-show-alt'></i> live preview</button></a>` : ``}
                         </div>
                     </div>
                 </div>
             </div>
         `
     )
-    
+    document.querySelector("#work__container_id").innerHTML = test.join('');
 }
 getDataHome()
 getDataSkill()
